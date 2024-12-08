@@ -83,7 +83,7 @@ const login = async (req, res) => {
 //logout Function
 const logout = (req, res) => {
   try {
-    res.cookie("jwt", "", { maxAge: 0 });
+    res.cookie("jwtCookie", "", { maxAge: 0 });
     res.status(200).json({ message: "Logged out sucessfully" });
   } catch (error) {
     console.log("Error in signup controller", error.message);
@@ -116,6 +116,7 @@ const updateProfile = async (req, res) => {
   }
 };
 
+//checking whether user is authenticate or not
 const checkAuth = (req, res) => {
   try {
     res.status(200).json(req.user);

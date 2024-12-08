@@ -8,6 +8,7 @@ import ProfilePage from "./pages/ProfilePage";
 import Home from "./pages/Home";
 import { useAuthStore } from "./store/useAuthStore";
 import { LoaderCircle } from "lucide-react";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
@@ -27,14 +28,30 @@ const App = () => {
 
   return (
     <>
+    <div data-theme="retro">
       <Navbar />
       <Routes>
-        <Route path="/" element={authUser ? <Home /> : <Navigate to="/login" /> } />
-        <Route path="/signup" element={ !authUser ? <SignUpPage /> : <Navigate to= "/" />} />
-        <Route path="/login" element={ !authUser ? <LoginPage /> : <Navigate to="/" />} />
+        <Route
+          path="/"
+          element={authUser ? <Home /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/signup"
+          element={!authUser ? <SignUpPage /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/login"
+          element={!authUser ? <LoginPage /> : <Navigate to="/" />}
+        />
         <Route path="/settings" element={<SettingPage />} />
-        <Route path="/profile" element={authUser ? <ProfilePage /> : <Navigate to = "/login" />} />
+        <Route
+          path="/profile"
+          element={authUser ? <ProfilePage /> : <Navigate to="/login" />}
+        />
       </Routes>
+
+      <Toaster position="top-center" reverseOrder={false} />
+      </div>
     </>
   );
 };
