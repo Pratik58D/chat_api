@@ -7,8 +7,12 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import {app, server} from "./lib/socket.io.js"
 
+//for deplyoment
+import path, { dirname } from "path";
+
 dotenv.config();
 const Port = process.env.PORT || 5001;
+const __dirname = path.resolve();
 
 connectDB();
 app.use(express.json({
@@ -24,5 +28,14 @@ app.use(
 
 app.use("/api/auth", authRoutes);
 app.use("/api/message", messageRoutes);
+
+//for prodution
+if(process.env.NODE_ENV === "production"){
+  app.use(express.static(path.join(__dirname , "../frontend/dist")));
+
+  app.get("*",(req,res)=>{
+    res.sendFile(path.join(__dirname,"../frontend","dist","index.html"))
+  })
+}
 
 server.listen(Port, () => console.log(`server is running ${Port} `));
